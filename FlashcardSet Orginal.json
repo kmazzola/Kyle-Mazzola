@@ -1,0 +1,778 @@
+{
+  "metadata": {
+    "kernelspec": {
+      "name": "python",
+      "display_name": "Python (Pyodide)",
+      "language": "python"
+    },
+    "language_info": {
+      "codemirror_mode": {
+        "name": "python",
+        "version": 3
+      },
+      "file_extension": ".py",
+      "mimetype": "text/x-python",
+      "name": "python",
+      "nbconvert_exporter": "python",
+      "pygments_lexer": "ipython3",
+      "version": "3.8"
+    }
+  },
+  "nbformat_minor": 5,
+  "nbformat": 4,
+  "cells": [
+    {
+      "id": "2755cfd1-3669-408b-9928-776d0a3936f9",
+      "cell_type": "code",
+      "source": "# Open and read the file\nfile = open(\"FlashcardSet.txt\", \"r\")\nlines = file.readlines()\nfile.close()\n\n# Print each line to see what we got\nfor line in lines:\n    print(line)",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "Controlling: The process of gathering feedback to ensure that a plan is being properly executed or modified as circumstances change.\n\nFinancial Accounting vs Managerial Accounting (time focus): FA= focuses on the past MA= focuses on the future\n\nPerformance Report: A schedule that compares budgeted data to actual data in order to identify and learn from results\n\nProduct Leadership: A customer value proposition used by companies like apple (having the best products is how they attract customers)\n\nBusiness Process: A series of steps followed in order to carry out come task in business\n\nCorporation Governance: The system by which a company is directed and controlled\n\nSelling costs: Can be either direct or indirect\n\nHigh-Low Method: (highest unit-lowest unit)/(highest price-lowest price) to change in cost / change in activity\n\nFixed costs per unit: Increases as production decreases (and vice versa)\n\nCost Equation: Y=a + bX\n\nY (mixed costs): Dependent\n\na (fixed costs): Fixed costs\n\nb (variable costs): Variable costs\n\nX (amount/level): Independent\n\nConversion cost: Direct labor cost + manufacturing overhead cost\n\nSunk cost: A cost that cannot be avoided because it had already been incurred\n\nTarget customers: Should be the focal point of a companies strategies\n\nCost volume profit graph: Revenue will be above expense when activity exceeds the breakeven point\n\nBreakeven point decreases with: An increase in selling price\n\nBreakeven formula: Breakeven point in units = fixed costs / (selling price - variable costs)\n\nContribution Margin Ratio: (CM)/Sales or (Sales-Variable Expenses)/Sales\n\nSchedule of Costs of Goods Manufactured: Represents amount of goods COMPLETED during the CURRENT year\n\nAccumulated Depreciation: Debit (depreciation expense is credited)\n\nClosing out underpaid or overspilled MOH: 1. Multiple accounts distributed 2. Directly to COGS\n\n3 Pillars of managerial accounting: Planning, controlling, decision making\n\nManagerial accounting reports do not have to follow: GAAP\n\nEnterprise Risk Management: The process used by a company to identify risks and develop responses to those risks that enable a company to be reasonably assured of meeting its goal\n\nInstitute of Management Accountants: Organization that establishes the statement of ethical professional practice for managerial accountants\n\nOperating Excellence: The customer value proposition that focuses on delivery and service faster and at a lower price, and more conveniently\n\nStakeholders include: Customers, employees, communities, suppliers, stockholders (NOT competitors)\n\nCredible and respectful leaders have the power to: Intrinsically motivate employees\n\nContribution margin: What remains from the total sales after deducting all the variable expenses\n\nFixed manufacturing overhead in absorption costing: A product cost\n\nCost of inventory in variable vs absorption costing: Lower in variable because absorption costing absorbs the fixed costs as well as the variable costs\n\nCommon fixed costs: Incurred because of many segments and should not be charged to one individual segment\n\nMain difference between variable and absorption costing: Whether or not fixed manufacturing costs should be included in product costs\n\nGross margin: Used in reports using absorption costing but not variable costing\n\nAbsorption costing is higher when: Production exceeds sales\n\nVariable costing is higher when: Sales are higher than production\n\nSegment breakeven: Traceable fixed expenses / segment CM ratio\n\nResponsibility accounting: Each manager should be held responsible for only that which he or she can control\n\nSelf-imposed budgets may result in: Budgetary slack\n\nBudget order: Sales, production, direct labor, cash, IS and BS\n\nDirect labor budget is based on: Required production for the period\n\nBudgets prepared by frontline managers are: More accurate than those prepared by top managers\n\nMaterials price variance: The variance that is most useful in assessing the performance of the purchasing department\n\nBalance scorecards include: The satisfaction of the customer because it is under the manager's control\n\nTo increase ROI, decrease: Average operating assets\n\nDecrease in average operating assets will result in: Increased operating income\n\n"
+        }
+      ],
+      "execution_count": 4
+    },
+    {
+      "id": "91798d4e-16a2-4569-b48d-c200f916a8f2",
+      "cell_type": "code",
+      "source": "# Open and read the file\nfile = open(\"FlashcardSet.txt\", \"r\")\nlines = file.readlines()\nfile.close()\n\n# Create a list to store our flashcards\nflashcards = []\n\n# Process each line\nfor line in lines:\n    # Split the line at the colon\n    parts = line.split(\":\")\n    term = parts[0]\n    definition = parts[1]\n    \n    # Store as a dictionary\n    card = {\"term\": term, \"definition\": definition}\n    flashcards.append(card)\n\n# Print to see if it worked\nprint(f\"Loaded {len(flashcards)} flashcards!\")\nprint(\"\\nFirst flashcard:\")\nprint(f\"Term: {flashcards[0]['term']}\")\nprint(f\"Definition: {flashcards[0]['definition']}\")",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "Loaded 49 flashcards!\n\nFirst flashcard:\nTerm: Controlling\nDefinition:  The process of gathering feedback to ensure that a plan is being properly executed or modified as circumstances change.\n\n"
+        }
+      ],
+      "execution_count": 5
+    },
+    {
+      "id": "ea5a7794-170c-48e8-921e-2455e6de59b3",
+      "cell_type": "code",
+      "source": "import random\n\n# Open and read the file\nfile = open(\"FlashcardSet.txt\", \"r\")\nlines = file.readlines()\nfile.close()\n\n# Create a list to store our flashcards\nflashcards = []\n\n# Process each line\nfor line in lines:\n    parts = line.split(\":\")\n    term = parts[0].strip()\n    definition = parts[1].strip()\n    \n    card = {\"term\": term, \"definition\": definition}\n    flashcards.append(card)\n\n# Shuffle for random order\nrandom.shuffle(flashcards)\n\nprint(f\"=== Flashcard Study Session ===\")\nprint(f\"You have {len(flashcards)} flashcards total\")\nprint(f\"Studying in batches of 10\\n\")\n\nbatch_size = 10  # Automatic batch size\n\n# Split into batches\ntotal_correct = 0\ntotal_incorrect = 0\n\n# Calculate how many batches we need\nnum_batches = (len(flashcards) + batch_size - 1) // batch_size\n\nfor batch_num in range(num_batches):\n    # Get the cards for this batch\n    start = batch_num * batch_size\n    end = start + batch_size\n    batch = flashcards[start:end]\n    \n    print(f\"\\n{'='*40}\")\n    print(f\"BATCH {batch_num + 1} of {num_batches} ({len(batch)} cards)\")\n    print(f\"{'='*40}\\n\")\n    \n    correct = 0\n    wrong_cards = []\n    \n    # Quiz on this batch\n    for card in batch:\n        print(f\"TERM: {card['term']}\")\n        input(\"(Press Enter to see definition) \")\n        print(f\"DEFINITION: {card['definition']}\\n\")\n        \n        response = input(\"Did you get it right? (y/n): \")\n        \n        if response.lower() == \"y\":\n            correct += 1\n            print(\"✓ Correct!\\n\")\n        else:\n            wrong_cards.append(card)\n            print(\"✗ Keep studying!\\n\")\n    \n    # Batch results\n    incorrect = len(wrong_cards)\n    print(f\"\\n--- Batch {batch_num + 1} Results ---\")\n    print(f\"Correct: {correct}/{len(batch)}\")\n    print(f\"Incorrect: {incorrect}/{len(batch)}\")\n    \n    total_correct += correct\n    total_incorrect += incorrect\n    \n    # Review wrong answers from this batch\n    if len(wrong_cards) > 0:\n        print(f\"\\nYou missed {len(wrong_cards)} cards in this batch.\")\n        print(\"Let's review them now!\\n\")\n        \n        input(\"(Press Enter to start review) \")\n        print(\"\\n=== REVIEW SESSION ===\\n\")\n        \n        review_correct = 0\n        \n        for card in wrong_cards:\n            print(f\"TERM: {card['term']}\")\n            input(\"(Press Enter to see definition) \")\n            print(f\"DEFINITION: {card['definition']}\\n\")\n            \n            response = input(\"Did you get it right this time? (y/n): \")\n            \n            if response.lower() == \"y\":\n                review_correct += 1\n                print(\"✓ Great improvement!\\n\")\n            else:\n                print(\"✗ Keep practicing this one!\\n\")\n        \n        print(f\"--- Review Results ---\")\n        print(f\"Improved on: {review_correct}/{len(wrong_cards)}\\n\")\n    else:\n        print(\"🎉 Perfect score on this batch!\\n\")\n    \n    # Ask if they want to continue to next batch (unless it's the last one)\n    if batch_num < num_batches - 1:\n        continue_study = input(\"Continue to next batch? (y/n): \")\n        if continue_study.lower() != \"y\":\n            print(\"\\nStopping study session.\")\n            break\n\n# Final overall results\nprint(f\"\\n{'='*40}\")\nprint(f\"OVERALL RESULTS\")\nprint(f\"{'='*40}\")\nprint(f\"Total Correct: {total_correct}\")\nprint(f\"Total Incorrect: {total_incorrect}\")\nprint(f\"Overall Score: {total_correct}/{total_correct + total_incorrect} ({100*total_correct//(total_correct + total_incorrect)}%)\")",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "=== Flashcard Study Session ===\nYou have 49 flashcards total\nStudying in batches of 10\n\n\n========================================\nBATCH 1 of 5 (10 cards)\n========================================\n\nTERM: Common fixed costs\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: Incurred because of many segments and should not be charged to one individual segment\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  n\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✗ Keep studying!\n\nTERM: Schedule of Costs of Goods Manufactured\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: Represents amount of goods COMPLETED during the CURRENT year\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  y\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✓ Correct!\n\nTERM: Decrease in average operating assets will result in\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  y\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: Increased operating income\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  y\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✓ Correct!\n\nTERM: Contribution Margin Ratio\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: (CM)/Sales or (Sales-Variable Expenses)/Sales\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  y\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✓ Correct!\n\nTERM: Credible and respectful leaders have the power to\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: Intrinsically motivate employees\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  n\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✗ Keep studying!\n\nTERM: Corporation Governance\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: The system by which a company is directed and controlled\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  n\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✗ Keep studying!\n\nTERM: Balance scorecards include\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: The satisfaction of the customer because it is under the manager's control\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  y\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✓ Correct!\n\nTERM: Responsibility accounting\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: Each manager should be held responsible for only that which he or she can control\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  n\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✗ Keep studying!\n\nTERM: Performance Report\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: A schedule that compares budgeted data to actual data in order to identify and learn from results\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  y\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✓ Correct!\n\nTERM: Product Leadership\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: A customer value proposition used by companies like apple (having the best products is how they attract customers)\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  n\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✗ Keep studying!\n\n\n--- Batch 1 Results ---\nCorrect: 5/10\nIncorrect: 5/10\n\nYou missed 5 cards in this batch.\nLet's review them now!\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to start review)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "\n=== REVIEW SESSION ===\n\nTERM: Common fixed costs\nDEFINITION: Incurred because of many segments and should not be charged to one individual segment\n\n"
+        },
+        {
+          "ename": "<class 'AttributeError'>",
+          "evalue": "'NoneType' object has no attribute 'lower'",
+          "traceback": [
+            "\u001b[31m---------------------------------------------------------------------------\u001b[39m",
+            "\u001b[31mAttributeError\u001b[39m                            Traceback (most recent call last)",
+            "\u001b[36mCell\u001b[39m\u001b[36m \u001b[39m\u001b[32mIn[1]\u001b[39m\u001b[32m, line 90\u001b[39m\n\u001b[32m     86\u001b[39m \u001b[38;5;28mprint\u001b[39m(\u001b[33mf\u001b[39m\u001b[33m\"\u001b[39m\u001b[33mDEFINITION: \u001b[39m\u001b[38;5;132;01m{\u001b[39;00mcard[\u001b[33m'\u001b[39m\u001b[33mdefinition\u001b[39m\u001b[33m'\u001b[39m]\u001b[38;5;132;01m}\u001b[39;00m\u001b[38;5;130;01m\\n\u001b[39;00m\u001b[33m\"\u001b[39m)\n\u001b[32m     88\u001b[39m response = \u001b[38;5;28minput\u001b[39m(\u001b[33m\"\u001b[39m\u001b[33mDid you get it right this time? (y/n): \u001b[39m\u001b[33m\"\u001b[39m)\n\u001b[32m---> \u001b[39m\u001b[32m90\u001b[39m \u001b[38;5;28;01mif\u001b[39;00m \u001b[43mresponse\u001b[49m\u001b[43m.\u001b[49m\u001b[43mlower\u001b[49m() == \u001b[33m\"\u001b[39m\u001b[33my\u001b[39m\u001b[33m\"\u001b[39m:\n\u001b[32m     91\u001b[39m     review_correct += \u001b[32m1\u001b[39m\n\u001b[32m     92\u001b[39m     \u001b[38;5;28mprint\u001b[39m(\u001b[33m\"\u001b[39m\u001b[33m✓ Great improvement!\u001b[39m\u001b[38;5;130;01m\\n\u001b[39;00m\u001b[33m\"\u001b[39m)\n",
+            "\u001b[31mAttributeError\u001b[39m: 'NoneType' object has no attribute 'lower'"
+          ],
+          "output_type": "error"
+        }
+      ],
+      "execution_count": 1
+    },
+    {
+      "id": "a01fe4b1-d62d-4982-b6ec-aaf3a4cfa5c3",
+      "cell_type": "code",
+      "source": "import random\n\n# Open and read the file\nfile = open(\"FlashcardSet.txt\", \"r\")\nlines = file.readlines()\nfile.close()\n\n# Create a list to store our flashcards\nflashcards = []\n\n# Process each line\nfor line in lines:\n    parts = line.split(\":\")\n    term = parts[0].strip()\n    definition = parts[1].strip()\n    \n    card = {\"term\": term, \"definition\": definition}\n    flashcards.append(card)\n\n# Shuffle for random order\nrandom.shuffle(flashcards)\n\nprint(f\"=== Flashcard Study Session ===\")\nprint(f\"You have {len(flashcards)} flashcards total\")\nprint(f\"Studying in batches of 10\\n\")\n\nbatch_size = 10  # Automatic batch size\n\n# Split into batches\ntotal_correct = 0\ntotal_incorrect = 0\n\n# Calculate how many batches we need\nnum_batches = (len(flashcards) + batch_size - 1) // batch_size\n\nfor batch_num in range(num_batches):\n    # Get the cards for this batch\n    start = batch_num * batch_size\n    end = start + batch_size\n    batch = flashcards[start:end]\n    \n    print(f\"\\n{'='*40}\")\n    print(f\"BATCH {batch_num + 1} of {num_batches} ({len(batch)} cards)\")\n    print(f\"{'='*40}\\n\")\n    \n    correct = 0\n    wrong_cards = []\n    \n    # Quiz on this batch\n    for card in batch:\n        print(f\"TERM: {card['term']}\")\n        input(\"(Press Enter to see definition) \")\n        print(f\"DEFINITION: {card['definition']}\\n\")\n        \n        response = input(\"Did you get it right? (y/n): \")\n        \n        if response.lower() == \"y\":\n            correct += 1\n            print(\"✓ Correct!\\n\")\n        else:\n            wrong_cards.append(card)\n            print(\"✗ Keep studying!\\n\")\n    \n    # Batch results\n    incorrect = len(wrong_cards)\n    print(f\"\\n--- Batch {batch_num + 1} Results ---\")\n    print(f\"Correct: {correct}/{len(batch)}\")\n    print(f\"Incorrect: {incorrect}/{len(batch)}\")\n    \n    total_correct += correct\n    total_incorrect += incorrect\n    \n    # Review wrong answers from this batch\n    if len(wrong_cards) > 0:\n        print(f\"\\nYou missed {len(wrong_cards)} cards in this batch.\")\n        print(\"Let's review them now!\\n\")\n        \n        input(\"(Press Enter to start review) \")\n        print(\"\\n=== REVIEW SESSION ===\\n\")\n        \n        review_correct = 0\n        \n        for card in wrong_cards:\n            print(f\"TERM: {card['term']}\")\n            input(\"(Press Enter to see definition) \")\n            print(f\"DEFINITION: {card['definition']}\\n\")\n            \n            response = input(\"Did you get it right this time? (y/n): \")\n            \n            if response.lower() == \"y\":\n                review_correct += 1\n                print(\"✓ Great improvement!\\n\")\n            else:\n                print(\"✗ Keep practicing this one!\\n\")\n        \n        print(f\"--- Review Results ---\")\n        print(f\"Improved on: {review_correct}/{len(wrong_cards)}\\n\")\n    else:\n        print(\"🎉 Perfect score on this batch!\\n\")\n    \n    # Ask if they want to continue to next batch (unless it's the last one)\n    if batch_num < num_batches - 1:\n        continue_study = input(\"Continue to next batch? (y/n): \")\n        if continue_study.lower() != \"y\":\n            print(\"\\nStopping study session.\")\n            break\n\n# Final overall results\nprint(f\"\\n{'='*40}\")\nprint(f\"OVERALL RESULTS\")\nprint(f\"{'='*40}\")\nprint(f\"Total Correct: {total_correct}\")\nprint(f\"Total Incorrect: {total_incorrect}\")\nprint(f\"Overall Score: {total_correct}/{total_correct + total_incorrect} ({100*total_correct//(total_correct + total_incorrect)}%)\")",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "=== Flashcard Study Session ===\nYou have 49 flashcards total\nStudying in batches of 10\n\n\n========================================\nBATCH 1 of 5 (10 cards)\n========================================\n\nTERM: Common fixed costs\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: Incurred because of many segments and should not be charged to one individual segment\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  n\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✗ Keep studying!\n\nTERM: Schedule of Costs of Goods Manufactured\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: Represents amount of goods COMPLETED during the CURRENT year\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  y\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✓ Correct!\n\nTERM: Decrease in average operating assets will result in\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  y\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: Increased operating income\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  y\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✓ Correct!\n\nTERM: Contribution Margin Ratio\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: (CM)/Sales or (Sales-Variable Expenses)/Sales\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  y\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✓ Correct!\n\nTERM: Credible and respectful leaders have the power to\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: Intrinsically motivate employees\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  n\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✗ Keep studying!\n\nTERM: Corporation Governance\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: The system by which a company is directed and controlled\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  n\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✗ Keep studying!\n\nTERM: Balance scorecards include\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: The satisfaction of the customer because it is under the manager's control\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  y\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✓ Correct!\n\nTERM: Responsibility accounting\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: Each manager should be held responsible for only that which he or she can control\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  n\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✗ Keep studying!\n\nTERM: Performance Report\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: A schedule that compares budgeted data to actual data in order to identify and learn from results\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  y\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✓ Correct!\n\nTERM: Product Leadership\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: A customer value proposition used by companies like apple (having the best products is how they attract customers)\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  n\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✗ Keep studying!\n\n\n--- Batch 1 Results ---\nCorrect: 5/10\nIncorrect: 5/10\n\nYou missed 5 cards in this batch.\nLet's review them now!\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to start review)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "\n=== REVIEW SESSION ===\n\nTERM: Common fixed costs\nDEFINITION: Incurred because of many segments and should not be charged to one individual segment\n\n"
+        },
+        {
+          "ename": "<class 'AttributeError'>",
+          "evalue": "'NoneType' object has no attribute 'lower'",
+          "traceback": [
+            "\u001b[31m---------------------------------------------------------------------------\u001b[39m",
+            "\u001b[31mAttributeError\u001b[39m                            Traceback (most recent call last)",
+            "\u001b[36mCell\u001b[39m\u001b[36m \u001b[39m\u001b[32mIn[1]\u001b[39m\u001b[32m, line 90\u001b[39m\n\u001b[32m     86\u001b[39m \u001b[38;5;28mprint\u001b[39m(\u001b[33mf\u001b[39m\u001b[33m\"\u001b[39m\u001b[33mDEFINITION: \u001b[39m\u001b[38;5;132;01m{\u001b[39;00mcard[\u001b[33m'\u001b[39m\u001b[33mdefinition\u001b[39m\u001b[33m'\u001b[39m]\u001b[38;5;132;01m}\u001b[39;00m\u001b[38;5;130;01m\\n\u001b[39;00m\u001b[33m\"\u001b[39m)\n\u001b[32m     88\u001b[39m response = \u001b[38;5;28minput\u001b[39m(\u001b[33m\"\u001b[39m\u001b[33mDid you get it right this time? (y/n): \u001b[39m\u001b[33m\"\u001b[39m)\n\u001b[32m---> \u001b[39m\u001b[32m90\u001b[39m \u001b[38;5;28;01mif\u001b[39;00m \u001b[43mresponse\u001b[49m\u001b[43m.\u001b[49m\u001b[43mlower\u001b[49m() == \u001b[33m\"\u001b[39m\u001b[33my\u001b[39m\u001b[33m\"\u001b[39m:\n\u001b[32m     91\u001b[39m     review_correct += \u001b[32m1\u001b[39m\n\u001b[32m     92\u001b[39m     \u001b[38;5;28mprint\u001b[39m(\u001b[33m\"\u001b[39m\u001b[33m✓ Great improvement!\u001b[39m\u001b[38;5;130;01m\\n\u001b[39;00m\u001b[33m\"\u001b[39m)\n",
+            "\u001b[31mAttributeError\u001b[39m: 'NoneType' object has no attribute 'lower'"
+          ],
+          "output_type": "error"
+        }
+      ],
+      "execution_count": 1
+    },
+    {
+      "id": "30dbeefc-4cff-40fd-9fa5-1c96019150ce",
+      "cell_type": "code",
+      "source": "import random\n\n# Open and read the file\nfile = open(\"FlashcardSet.txt\", \"r\")\nlines = file.readlines()\nfile.close()\n\n# Create a list to store our flashcards\nflashcards = []\n\n# Process each line\nfor line in lines:\n    parts = line.split(\":\")\n    term = parts[0].strip()\n    definition = parts[1].strip()\n    \n    card = {\"term\": term, \"definition\": definition}\n    flashcards.append(card)\n\n# Shuffle for random order\nrandom.shuffle(flashcards)\n\nprint(f\"=== Flashcard Study Session ===\")\nprint(f\"You have {len(flashcards)} flashcards total\")\nprint(f\"Studying in batches of 10\\n\")\n\nbatch_size = 10  # Automatic batch size\n\n# Split into batches\ntotal_correct = 0\ntotal_incorrect = 0\n\n# Calculate how many batches we need\nnum_batches = (len(flashcards) + batch_size - 1) // batch_size\n\nfor batch_num in range(num_batches):\n    # Get the cards for this batch\n    start = batch_num * batch_size\n    end = start + batch_size\n    batch = flashcards[start:end]\n    \n    print(f\"\\n{'='*40}\")\n    print(f\"BATCH {batch_num + 1} of {num_batches} ({len(batch)} cards)\")\n    print(f\"{'='*40}\\n\")\n    \n    correct = 0\n    wrong_cards = []\n    \n    # Quiz on this batch\n    for card in batch:\n        print(f\"TERM: {card['term']}\")\n        input(\"(Press Enter to see definition) \")\n        print(f\"DEFINITION: {card['definition']}\\n\")\n        \n        response = input(\"Did you get it right? (y/n): \")\n        \n        if response.lower() == \"y\":\n            correct += 1\n            print(\"✓ Correct!\\n\")\n        else:\n            wrong_cards.append(card)\n            print(\"✗ Keep studying!\\n\")\n    \n    # Batch results\n    incorrect = len(wrong_cards)\n    print(f\"\\n--- Batch {batch_num + 1} Results ---\")\n    print(f\"Correct: {correct}/{len(batch)}\")\n    print(f\"Incorrect: {incorrect}/{len(batch)}\")\n    \n    total_correct += correct\n    total_incorrect += incorrect\n    \n    # Review wrong answers from this batch\n    if len(wrong_cards) > 0:\n        print(f\"\\nYou missed {len(wrong_cards)} cards in this batch.\")\n        print(\"Let's review them now!\\n\")\n        \n        input(\"(Press Enter to start review) \")\n        print(\"\\n=== REVIEW SESSION ===\\n\")\n        \n        review_correct = 0\n        \n        for card in wrong_cards:\n            print(f\"TERM: {card['term']}\")\n            input(\"(Press Enter to see definition) \")\n            print(f\"DEFINITION: {card['definition']}\\n\")\n            \n            response = input(\"Did you get it right this time? (y/n): \")\n            \n            if response.lower() == \"y\":\n                review_correct += 1\n                print(\"✓ Great improvement!\\n\")\n            else:\n                print(\"✗ Keep practicing this one!\\n\")\n        \n        print(f\"--- Review Results ---\")\n        print(f\"Improved on: {review_correct}/{len(wrong_cards)}\\n\")\n    else:\n        print(\"🎉 Perfect score on this batch!\\n\")\n    \n    # Ask if they want to continue to next batch (unless it's the last one)\n    if batch_num < num_batches - 1:\n        continue_study = input(\"Continue to next batch? (y/n): \")\n        if continue_study.lower() != \"y\":\n            print(\"\\nStopping study session.\")\n            break\n\n# Final overall results\nprint(f\"\\n{'='*40}\")\nprint(f\"OVERALL RESULTS\")\nprint(f\"{'='*40}\")\nprint(f\"Total Correct: {total_correct}\")\nprint(f\"Total Incorrect: {total_incorrect}\")\nprint(f\"Overall Score: {total_correct}/{total_correct + total_incorrect} ({100*total_correct//(total_correct + total_incorrect)}%)\")",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "=== Flashcard Study Session ===\nYou have 49 flashcards total\nStudying in batches of 10\n\n\n========================================\nBATCH 1 of 5 (10 cards)\n========================================\n\nTERM: Common fixed costs\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: Incurred because of many segments and should not be charged to one individual segment\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  n\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✗ Keep studying!\n\nTERM: Schedule of Costs of Goods Manufactured\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: Represents amount of goods COMPLETED during the CURRENT year\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  y\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✓ Correct!\n\nTERM: Decrease in average operating assets will result in\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  y\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: Increased operating income\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  y\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✓ Correct!\n\nTERM: Contribution Margin Ratio\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: (CM)/Sales or (Sales-Variable Expenses)/Sales\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  y\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✓ Correct!\n\nTERM: Credible and respectful leaders have the power to\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: Intrinsically motivate employees\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  n\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✗ Keep studying!\n\nTERM: Corporation Governance\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: The system by which a company is directed and controlled\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  n\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✗ Keep studying!\n\nTERM: Balance scorecards include\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: The satisfaction of the customer because it is under the manager's control\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  y\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✓ Correct!\n\nTERM: Responsibility accounting\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: Each manager should be held responsible for only that which he or she can control\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  n\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✗ Keep studying!\n\nTERM: Performance Report\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: A schedule that compares budgeted data to actual data in order to identify and learn from results\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  y\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✓ Correct!\n\nTERM: Product Leadership\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to see definition)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DEFINITION: A customer value proposition used by companies like apple (having the best products is how they attract customers)\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "Did you get it right? (y/n):  n\n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "✗ Keep studying!\n\n\n--- Batch 1 Results ---\nCorrect: 5/10\nIncorrect: 5/10\n\nYou missed 5 cards in this batch.\nLet's review them now!\n\n"
+        },
+        {
+          "output_type": "stream",
+          "name": "stdin",
+          "text": "(Press Enter to start review)  \n"
+        },
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "\n=== REVIEW SESSION ===\n\nTERM: Common fixed costs\nDEFINITION: Incurred because of many segments and should not be charged to one individual segment\n\n"
+        },
+        {
+          "ename": "<class 'AttributeError'>",
+          "evalue": "'NoneType' object has no attribute 'lower'",
+          "traceback": [
+            "\u001b[31m---------------------------------------------------------------------------\u001b[39m",
+            "\u001b[31mAttributeError\u001b[39m                            Traceback (most recent call last)",
+            "\u001b[36mCell\u001b[39m\u001b[36m \u001b[39m\u001b[32mIn[1]\u001b[39m\u001b[32m, line 90\u001b[39m\n\u001b[32m     86\u001b[39m \u001b[38;5;28mprint\u001b[39m(\u001b[33mf\u001b[39m\u001b[33m\"\u001b[39m\u001b[33mDEFINITION: \u001b[39m\u001b[38;5;132;01m{\u001b[39;00mcard[\u001b[33m'\u001b[39m\u001b[33mdefinition\u001b[39m\u001b[33m'\u001b[39m]\u001b[38;5;132;01m}\u001b[39;00m\u001b[38;5;130;01m\\n\u001b[39;00m\u001b[33m\"\u001b[39m)\n\u001b[32m     88\u001b[39m response = \u001b[38;5;28minput\u001b[39m(\u001b[33m\"\u001b[39m\u001b[33mDid you get it right this time? (y/n): \u001b[39m\u001b[33m\"\u001b[39m)\n\u001b[32m---> \u001b[39m\u001b[32m90\u001b[39m \u001b[38;5;28;01mif\u001b[39;00m \u001b[43mresponse\u001b[49m\u001b[43m.\u001b[49m\u001b[43mlower\u001b[49m() == \u001b[33m\"\u001b[39m\u001b[33my\u001b[39m\u001b[33m\"\u001b[39m:\n\u001b[32m     91\u001b[39m     review_correct += \u001b[32m1\u001b[39m\n\u001b[32m     92\u001b[39m     \u001b[38;5;28mprint\u001b[39m(\u001b[33m\"\u001b[39m\u001b[33m✓ Great improvement!\u001b[39m\u001b[38;5;130;01m\\n\u001b[39;00m\u001b[33m\"\u001b[39m)\n",
+            "\u001b[31mAttributeError\u001b[39m: 'NoneType' object has no attribute 'lower'"
+          ],
+          "output_type": "error"
+        }
+      ],
+      "execution_count": 1
+    },
+    {
+      "id": "52837714-6171-449d-9d76-f0fae82f77b1",
+      "cell_type": "code",
+      "source": "",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    }
+  ]
+}
