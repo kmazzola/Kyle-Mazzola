@@ -1,137 +1,114 @@
-# This is a basic woFinal Project Summary: Flashcard Study Application
-1. IDEA (10 pts)
-What I decided to build:
-I chose to build a flashcard study application to help me prepare for my upcoming Managerial Accounting exam. The program reads flashcards from a text file and quizzes me on the terms and definitions in an interactive study session.
-Specific features the program does:
+import random
 
-Reads 49 flashcards from a text file (flashcards.txt) where each line contains a term and definition separated by a colon
-Randomizes the order of flashcards so I don't just memorize the sequence
-Studies in batches of 10 cards at a time to make studying more manageable
-Shows me each term, lets me try to recall the answer, then reveals the definition
-Tracks which cards I get right and wrong in each batch
-Immediately reviews the cards I missed after each batch
-Allows me to continue to the next batch or stop studying
-Shows overall statistics at the end (total correct/incorrect and percentage)
+# Open and read the file
+file = open("FlashcardSet.txt", "r")
+lines = file.readlines()
+file.close()
 
-Why this scope was appropriate:
-This project was simple enough to complete but complex enough to require real problem-solving. It's not just a basic input/output program—it involves file handling, data structures, randomization, user interaction, and program flow control. The batch and review features add meaningful complexity without being overwhelming.
+# Create a list to store our flashcards
+flashcards = []
 
-2. RESEARCH (35 pts)
-How flashcards work in the real world:
-Flashcards are a proven study technique based on active recall. You see a term or question, try to remember the answer, then check if you were right. Reviewing wrong answers immediately helps reinforce what you missed. Studying in smaller batches is more effective than trying to memorize everything at once.
-How a computer represents flashcards:
-I learned that flashcards can be represented as data structures in Python:
+# Process each line
+for line in lines:
+    parts = line.split(":")
+    term = parts[0].strip()
+    definition = parts[1].strip()
+    
+    card = {"term": term, "definition": definition}
+    flashcards.append(card)
 
-Each individual flashcard is a dictionary with two keys: "term" and "definition"
-A collection of flashcards is a list that contains multiple dictionaries
-Example: [{"term": "Controlling", "definition": "The process of..."}, {...}]
+# Shuffle for random order
+random.shuffle(flashcards)
 
-Technical concepts I researched:
-File I/O (Input/Output):
+print(f"=== Flashcard Study Session ===")
+print(f"You have {len(flashcards)} flashcards total")
+print(f"Studying in batches of 10\n")
 
-How to open a file: open("filename.txt", "r") where "r" means read mode
-How to read all lines: .readlines() returns a list where each element is one line
-Why to close files: file.close() to free up system resources
+batch_size = 10  # Automatic batch size
 
-String manipulation:
+# Split into batches
+total_correct = 0
+total_incorrect = 0
 
-.split(":") breaks a string into parts at the colon character, returning a list
-.strip() removes extra whitespace (spaces, newlines) from the beginning and end of strings
-This was crucial because my file format was "Term: Definition" and I needed to separate them
+# Calculate how many batches we need
+num_batches = (len(flashcards) + batch_size - 1) // batch_size
 
-Data structures:
+for batch_num in range(num_batches):
+    # Get the cards for this batch
+    start = batch_num * batch_size
+    end = start + batch_size
+    batch = flashcards[start:end]
+    
+    print(f"\n{'='*40}")
+    print(f"BATCH {batch_num + 1} of {num_batches} ({len(batch)} cards)")
+    print(f"{'='*40}\n")
+    
+    correct = 0
+    wrong_cards = []
+    
+    # Quiz on this batch
+    for card in batch:
+        print(f"TERM: {card['term']}")
+        input("(Press Enter to see definition) ")
+        print(f"DEFINITION: {card['definition']}\n")
+        
+        response = input("Did you get it right? (y/n): ")
+        
+        if response.lower() == "y":
+            correct += 1
+            print("✓ Correct!\n")
+        else:
+            wrong_cards.append(card)
+            print("✗ Keep studying!\n")
+    
+    # Batch results
+    incorrect = len(wrong_cards)
+    print(f"\n--- Batch {batch_num + 1} Results ---")
+    print(f"Correct: {correct}/{len(batch)}")
+    print(f"Incorrect: {incorrect}/{len(batch)}")
+    
+    total_correct += correct
+    total_incorrect += incorrect
+    
+    # Review wrong answers from this batch
+    if len(wrong_cards) > 0:
+        print(f"\nYou missed {len(wrong_cards)} cards in this batch.")
+        print("Let's review them now!\n")
+        
+        input("(Press Enter to start review) ")
+        print("\n=== REVIEW SESSION ===\n")
+        
+        review_correct = 0
+        
+        for card in wrong_cards:
+            print(f"TERM: {card['term']}")
+            input("(Press Enter to see definition) ")
+            print(f"DEFINITION: {card['definition']}\n")
+            
+            response = input("Did you get it right this time? (y/n): ")
+            
+            if response.lower() == "y":
+                review_correct += 1
+                print("✓ Great improvement!\n")
+            else:
+                print("✗ Keep practicing this one!\n")
+        
+        print(f"--- Review Results ---")
+        print(f"Improved on: {review_correct}/{len(wrong_cards)}\n")
+    else:
+        print("🎉 Perfect score on this batch!\n")
+    
+    # Ask if they want to continue to next batch (unless it's the last one)
+    if batch_num < num_batches - 1:
+        continue_study = input("Continue to next batch? (y/n): ")
+        if continue_study.lower() != "y":
+            print("\nStopping study session.")
+            break
 
-Lists: ordered collections that can hold multiple items, accessed by index
-Dictionaries: key-value pairs that let me store related data together (term with its definition)
-Why I chose these: Lists are perfect for collections of flashcards, dictionaries are perfect for pairing terms with definitions
-
-Randomization:
-
-import random gives access to randomization functions
-random.shuffle(list) randomizes the order of items in a list in-place
-This ensures I'm not just memorizing the order of flashcards
-
-User input:
-
-input("prompt") displays a message and waits for the user to type something
-input() with no message just waits for Enter to be pressed
-.lower() converts text to lowercase so "Y", "y", "Yes" all work the same
-
-Program flow:
-
-for loops to iterate through flashcards
-if/else statements to handle correct/incorrect answers
-Breaking lists into batches using slicing: flashcards[start:end]
-Calculating number of batches needed: (total + batch_size - 1) // batch_size
-
-Resources I used:
-
-Python documentation on file handling
-Research on string methods like split() and strip()
-Understanding of list and dictionary data structures
-Information on the random module
-
-Kept professor in the loop:
-Throughout the process, I communicated about my progress and asked for guidance when deciding on features like batch studying and immediate review.
-
-3. MAKE THE COMPUTER DO ONE CONCRETE THING (15 pts)
-The core technical task I identified:
-Before I could have a working flashcard app, I needed to make the computer read my text file and parse it into usable data. This was the foundational step—without it, nothing else would work.
-Breaking it down (what the computer actually needs to do):
-
-Open the file containing my flashcards
-Read all the text content line by line
-For each line, separate the term from the definition (split at the colon)
-Store each term-definition pair in a way the program can use later
-Put all the flashcards into a collection I can iterate through
-
-My mental model:
-I thought of it like this: the computer needs to take raw text (just characters on a page) and turn it into structured data (organized information it can work with). The text file is just strings, but I need to transform those strings into a list of flashcard objects that the program can quiz me on.
-The concrete first goal:
-Get Python to open my flashcards.txt file, read it, and print out the contents to prove it can access the file. Once that worked, I could move on to parsing and structuring the data.
-
-4. TRANSLATE TO PYTHON (15 pts)
-How I learned to express my ideas in code:
-I used a combination of researching Python syntax, understanding what each function does, and trial-and-error testing to figure out the right code to write.
-The translation process:
-Step 1 - Reading the file:
-
-Mental idea: "Open the file and get its contents"
-Python code:
-
-rkflow to help you get started with Actions
-
-name: CI
-
-# Controls when the workflow will run
-on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+# Final overall results
+print(f"\n{'='*40}")
+print(f"OVERALL RESULTS")
+print(f"{'='*40}")
+print(f"Total Correct: {total_correct}")
+print(f"Total Incorrect: {total_incorrect}")
+print(f"Overall Score: {total_correct}/{total_correct + total_incorrect} ({100*total_correct//(total_correct + total_incorrect)}%)")
