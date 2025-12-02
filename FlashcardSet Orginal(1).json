@@ -1,0 +1,57 @@
+{
+  "metadata": {
+    "kernelspec": {
+      "name": "python",
+      "display_name": "Python (Pyodide)",
+      "language": "python"
+    },
+    "language_info": {
+      "codemirror_mode": {
+        "name": "python",
+        "version": 3
+      },
+      "file_extension": ".py",
+      "mimetype": "text/x-python",
+      "name": "python",
+      "nbconvert_exporter": "python",
+      "pygments_lexer": "ipython3",
+      "version": "3.8"
+    }
+  },
+  "nbformat_minor": 5,
+  "nbformat": 4,
+  "cells": [
+    {
+      "id": "2755cfd1-3669-408b-9928-776d0a3936f9",
+      "cell_type": "code",
+      "source": "# Open and read the file\nfile = open(\"FlashcardSet.txt\", \"r\")\nlines = file.readlines()\nfile.close()\n\n# Print each line to see what we got\nfor line in lines:\n    print(line)",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "Controlling: The process of gathering feedback to ensure that a plan is being properly executed or modified as circumstances change.\n\nFinancial Accounting vs Managerial Accounting (time focus): FA= focuses on the past MA= focuses on the future\n\nPerformance Report: A schedule that compares budgeted data to actual data in order to identify and learn from results\n\nProduct Leadership: A customer value proposition used by companies like apple (having the best products is how they attract customers)\n\nBusiness Process: A series of steps followed in order to carry out come task in business\n\nCorporation Governance: The system by which a company is directed and controlled\n\nSelling costs: Can be either direct or indirect\n\nHigh-Low Method: (highest unit-lowest unit)/(highest price-lowest price) to change in cost / change in activity\n\nFixed costs per unit: Increases as production decreases (and vice versa)\n\nCost Equation: Y=a + bX\n\nY (mixed costs): Dependent\n\na (fixed costs): Fixed costs\n\nb (variable costs): Variable costs\n\nX (amount/level): Independent\n\nConversion cost: Direct labor cost + manufacturing overhead cost\n\nSunk cost: A cost that cannot be avoided because it had already been incurred\n\nTarget customers: Should be the focal point of a companies strategies\n\nCost volume profit graph: Revenue will be above expense when activity exceeds the breakeven point\n\nBreakeven point decreases with: An increase in selling price\n\nBreakeven formula: Breakeven point in units = fixed costs / (selling price - variable costs)\n\nContribution Margin Ratio: (CM)/Sales or (Sales-Variable Expenses)/Sales\n\nSchedule of Costs of Goods Manufactured: Represents amount of goods COMPLETED during the CURRENT year\n\nAccumulated Depreciation: Debit (depreciation expense is credited)\n\nClosing out underpaid or overspilled MOH: 1. Multiple accounts distributed 2. Directly to COGS\n\n3 Pillars of managerial accounting: Planning, controlling, decision making\n\nManagerial accounting reports do not have to follow: GAAP\n\nEnterprise Risk Management: The process used by a company to identify risks and develop responses to those risks that enable a company to be reasonably assured of meeting its goal\n\nInstitute of Management Accountants: Organization that establishes the statement of ethical professional practice for managerial accountants\n\nOperating Excellence: The customer value proposition that focuses on delivery and service faster and at a lower price, and more conveniently\n\nStakeholders include: Customers, employees, communities, suppliers, stockholders (NOT competitors)\n\nCredible and respectful leaders have the power to: Intrinsically motivate employees\n\nContribution margin: What remains from the total sales after deducting all the variable expenses\n\nFixed manufacturing overhead in absorption costing: A product cost\n\nCost of inventory in variable vs absorption costing: Lower in variable because absorption costing absorbs the fixed costs as well as the variable costs\n\nCommon fixed costs: Incurred because of many segments and should not be charged to one individual segment\n\nMain difference between variable and absorption costing: Whether or not fixed manufacturing costs should be included in product costs\n\nGross margin: Used in reports using absorption costing but not variable costing\n\nAbsorption costing is higher when: Production exceeds sales\n\nVariable costing is higher when: Sales are higher than production\n\nSegment breakeven: Traceable fixed expenses / segment CM ratio\n\nResponsibility accounting: Each manager should be held responsible for only that which he or she can control\n\nSelf-imposed budgets may result in: Budgetary slack\n\nBudget order: Sales, production, direct labor, cash, IS and BS\n\nDirect labor budget is based on: Required production for the period\n\nBudgets prepared by frontline managers are: More accurate than those prepared by top managers\n\nMaterials price variance: The variance that is most useful in assessing the performance of the purchasing department\n\nBalance scorecards include: The satisfaction of the customer because it is under the manager's control\n\nTo increase ROI, decrease: Average operating assets\n\nDecrease in average operating assets will result in: Increased operating income\n\n"
+        }
+      ],
+      "execution_count": 4
+    },
+    {
+      "id": "011023a4-b3cd-43e2-9215-2b6e003f70f9",
+      "cell_type": "code",
+      "source": "import random\n\n# Open and read the file\nfile = open(\"FlashcardSet.txt\", \"r\")\nlines = file.readlines()\nfile.close()\n\n# Create a list to store our flashcards\nflashcards = []\n\n# Process each line\nfor line in lines:\n    parts = line.split(\":\")\n    term = parts[0].strip()\n    definition = parts[1].strip()\n    \n    card = {\"term\": term, \"definition\": definition}\n    flashcards.append(card)\n\n# Shuffle for random order\nrandom.shuffle(flashcards)\n\nprint(f\"=== Flashcard Study Session ===\")\nprint(f\"You have {len(flashcards)} flashcards total\")\nprint(f\"Studying in batches of 10\\n\")\n\nbatch_size = 10\n\n# Split into batches\ntotal_correct = 0\ntotal_incorrect = 0\n\n# Calculate how many batches we need\nnum_batches = (len(flashcards) + batch_size - 1) // batch_size\n\nfor batch_num in range(num_batches):\n    # Get the cards for this batch\n    start = batch_num * batch_size\n    end = start + batch_size\n    batch = flashcards[start:end]\n    \n    print(f\"\\n{'='*40}\")\n    print(f\"BATCH {batch_num + 1} of {num_batches} ({len(batch)} cards)\")\n    print(f\"{'='*40}\\n\")\n    \n    correct = 0\n    wrong_cards = []\n    \n    # Quiz on this batch\n    for card in batch:\n        print(f\"TERM: {card['term']}\")\n        input(\"(Press Enter to see definition) \")\n        print(f\"DEFINITION: {card['definition']}\\n\")\n        \n        response = input(\"Did you get it right? (y/n): \")\n        \n        if response and response.lower() == \"y\":  # FIXED: Added \"response and\"\n            correct += 1\n            print(\"✓ Correct!\\n\")\n        else:\n            wrong_cards.append(card)\n            print(\"✗ Keep studying!\\n\")\n    \n    # Batch results\n    incorrect = len(wrong_cards)\n    print(f\"\\n--- Batch {batch_num + 1} Results ---\")\n    print(f\"Correct: {correct}/{len(batch)}\")\n    print(f\"Incorrect: {incorrect}/{len(batch)}\")\n    \n    total_correct += correct\n    total_incorrect += incorrect\n    \n    # Review wrong answers from this batch\n    if len(wrong_cards) > 0:\n        print(f\"\\nYou missed {len(wrong_cards)} cards in this batch.\")\n        print(\"Let's review them now!\\n\")\n        \n        input(\"(Press Enter to start review) \")\n        print(\"\\n=== REVIEW SESSION ===\\n\")\n        \n        review_correct = 0\n        \n        for card in wrong_cards:\n            print(f\"TERM: {card['term']}\")\n            input(\"(Press Enter to see definition) \")\n            print(f\"DEFINITION: {card['definition']}\\n\")\n            \n            response = input(\"Did you get it right this time? (y/n): \")\n            \n            if response and response.lower() == \"y\":  # FIXED: Added \"response and\"\n                review_correct += 1\n                print(\"✓ Great improvement!\\n\")\n            else:\n                print(\"✗ Keep practicing this one!\\n\")\n        \n        print(f\"--- Review Results ---\")\n        print(f\"Improved on: {review_correct}/{len(wrong_cards)}\\n\")\n    else:\n        print(\"🎉 Perfect score on this batch!\\n\")\n    \n    # Ask if they want to continue to next batch (unless it's the last one)\n    if batch_num < num_batches - 1:\n        continue_study = input(\"Continue to next batch? (y/n): \")\n        if continue_study and continue_study.lower() != \"y\":  # FIXED: Added \"continue_study and\"\n            print(\"\\nStopping study session.\")\n            break\n\n# Final overall results\nprint(f\"\\n{'='*40}\")\nprint(f\"OVERALL RESULTS\")\nprint(f\"{'='*40}\")\nprint(f\"Total Correct: {total_correct}\")\nprint(f\"Total Incorrect: {total_incorrect}\")\nif total_correct + total_incorrect > 0:  # FIXED: Prevent division by zero\n    print(f\"Overall Score: {total_correct}/{total_correct + total_incorrect} ({100*total_correct//(total_correct + total_incorrect)}%)\")",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "=== Flashcard Study Session ===\nYou have 49 flashcards total\nStudying in batches of 10\n\n\n========================================\nBATCH 1 of 5 (10 cards)\n========================================\n\nTERM: Cost of inventory in variable vs absorption costing\n"
+        }
+      ],
+      "execution_count": null
+    }
+  ]
+}
